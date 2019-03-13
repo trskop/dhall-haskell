@@ -52,6 +52,7 @@ import qualified Data.Text.Prettyprint.Doc                 as Pretty
 import qualified Data.Text.Prettyprint.Doc.Render.Terminal as Pretty
 import qualified Dhall
 import qualified Dhall.Binary
+import qualified Dhall.Binary.StandardVersion
 import qualified Dhall.Core
 import qualified Dhall.Diff
 import qualified Dhall.Format
@@ -112,7 +113,7 @@ parseOptions =
     <*> switch "explain" "Explain error messages in more detail"
     <*> switch "plain" "Disable syntax highlighting"
     <*> switch "ascii" "Format code using only ASCII syntax"
-    <*> Dhall.Binary.parseStandardVersion
+    <*> pure Dhall.Binary.StandardVersion.defaultStandardVersion
   where
     switch name description =
         Options.Applicative.switch

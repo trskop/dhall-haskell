@@ -145,7 +145,7 @@ import Data.Traversable (traverse)
 #endif
 import Data.Typeable (Typeable)
 import System.FilePath ((</>))
-import Dhall.Binary (StandardVersion(..))
+import Dhall.Binary.StandardVersion (StandardVersion(..))
 import Dhall.Core
     ( Expr(..)
     , Binding(..)
@@ -184,6 +184,7 @@ import qualified Data.Text.Encoding
 import qualified Data.Text                        as Text
 import qualified Data.Text.IO
 import qualified Dhall.Binary
+import qualified Dhall.Binary.StandardVersion
 import qualified Dhall.Core
 import qualified Dhall.Map
 import qualified Dhall.Parser
@@ -831,7 +832,7 @@ loadWith expr₀ = case expr₀ of
               throwM (SourcedException (Src begin end text₂) (MissingImports (es₀ ++ es₁)))
             where
               text₂ = text₀ <> " ? " <> text₁
- 
+
   Const a              -> pure (Const a)
   Var a                -> pure (Var a)
   Lam a b c            -> Lam <$> pure a <*> loadWith b <*> loadWith c
@@ -925,7 +926,7 @@ encodeExpression _standardVersion expression = bytesStrict
             NoVersion -> term
             s         -> TList [ TString v, term ]
               where
-                v = Dhall.Binary.renderStandardVersion s
+                v = Dhall.Binary.StandardVersion.renderStandardVersion s
 
     bytesLazy = Codec.Serialise.serialise taggedTerm
 

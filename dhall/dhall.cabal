@@ -439,6 +439,7 @@ Library
         Dhall.TypeCheck,
         Dhall.Version
     Other-Modules:
+        Dhall.Binary.StandardVersion,
         Dhall.Pretty.Internal,
         Dhall.Parser.Expression,
         Dhall.Parser.Combinators,

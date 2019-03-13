@@ -7,7 +7,7 @@ module Dhall.Hash
       hash
     ) where
 
-import Dhall.Binary (StandardVersion)
+import Dhall.Binary.StandardVersion (StandardVersion)
 import Dhall.Parser (exprFromText)
 import Dhall.Import (hashExpressionToCode, standardVersion)
 import Lens.Family (set)

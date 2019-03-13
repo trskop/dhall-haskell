@@ -8,10 +8,8 @@
 
 module Dhall.Binary
     ( -- * Standard versions
-      StandardVersion(..)
-    , defaultStandardVersion
-    , parseStandardVersion
-    , renderStandardVersion
+      StandardVersion
+    , Dhall.Binary.StandardVersion.defaultStandardVersion
 
     -- * Encoding and decoding
     , encode
@@ -24,6 +22,7 @@ module Dhall.Binary
 import Codec.CBOR.Term (Term(..))
 import Control.Applicative (empty, (<|>))
 import Control.Exception (Exception)
+import Dhall.Binary.StandardVersion (StandardVersion)
 import Dhall.Core
     ( Binding(..)
     , Chunks(..)
@@ -45,8 +44,6 @@ import Data.ByteArray.Encoding (Base(..))
 import Data.Foldable (toList)
 import Data.List.NonEmpty (NonEmpty(..))
 import Data.Monoid ((<>))
-import Data.Text (Text)
-import Options.Applicative (Parser)
 import Prelude hiding (exponent)
 import GHC.Float (double2Float, float2Double)
 
@@ -56,56 +53,9 @@ import qualified Data.ByteString
 import qualified Data.Sequence
 import qualified Data.Text
 import qualified Data.Text.Encoding
+import qualified Dhall.Binary.StandardVersion
 import qualified Dhall.Map
 import qualified Dhall.Set
-import qualified Options.Applicative
-
--- | Supported version strings
-data StandardVersion
-    = NoVersion
-    -- ^ No version string
-    | V_5_0_0
-    -- ^ Version "5.0.0"
-    | V_4_0_0
-    -- ^ Version "4.0.0"
-    | V_3_0_0
-    -- ^ Version "3.0.0"
-    | V_2_0_0
-    -- ^ Version "2.0.0"
-    | V_1_0_0
-    -- ^ Version "1.0.0"
-    deriving (Enum, Bounded)
-
-defaultStandardVersion :: StandardVersion
-defaultStandardVersion = NoVersion
-
-parseStandardVersion :: Parser StandardVersion
-parseStandardVersion =
-    Options.Applicative.option readVersion
-        (   Options.Applicative.long "standard-version"
-        <>  Options.Applicative.metavar "X.Y.Z"
-        <>  Options.Applicative.help "The standard version to use"
-        <>  Options.Applicative.value defaultStandardVersion
-        )
-  where
-    readVersion = do
-        string <- Options.Applicative.str
-        case string :: Text of
-            "none"  -> return NoVersion
-            "1.0.0" -> return V_1_0_0
-            "2.0.0" -> return V_2_0_0
-            "3.0.0" -> return V_3_0_0
-            "4.0.0" -> return V_4_0_0
-            "5.0.0" -> return V_5_0_0
-            _       -> fail "Unsupported version"
-
-renderStandardVersion :: StandardVersion -> Text
-renderStandardVersion NoVersion = "none"
-renderStandardVersion V_1_0_0   = "1.0.0"
-renderStandardVersion V_2_0_0   = "2.0.0"
-renderStandardVersion V_3_0_0   = "3.0.0"
-renderStandardVersion V_4_0_0   = "4.0.0"
-renderStandardVersion V_5_0_0   = "5.0.0"
 
 {-| Convert a function applied to multiple arguments to the base function and
     the list of arguments

@@ -10,7 +10,7 @@ import Data.Dynamic
 import Data.List.NonEmpty (NonEmpty)
 import Data.Map (Map)
 import Data.Semigroup ((<>))
-import Dhall.Binary (StandardVersion(..))
+import Dhall.Binary.StandardVersion (StandardVersion(..))
 import Dhall.Context (Context)
 import Dhall.Core
   ( Directory (..)
@@ -30,7 +30,7 @@ import Lens.Family (LensLike')
 import System.FilePath (isRelative, splitDirectories)
 import Text.Dot (Dot, NodeId, userNode, userNodeId)
 
-import qualified Dhall.Binary
+import qualified Dhall.Binary.StandardVersion
 import qualified Dhall.Context
 import qualified Data.Map      as Map
 import qualified Data.Text
@@ -83,7 +83,7 @@ emptyStatusWith _resolver _cacher rootDirectory = Status {..}
 
     _manager = Nothing
 
-    _standardVersion = Dhall.Binary.defaultStandardVersion
+    _standardVersion = Dhall.Binary.StandardVersion.defaultStandardVersion
 
     _normalizer = ReifiedNormalizer (const (pure Nothing))
 

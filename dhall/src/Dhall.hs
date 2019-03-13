@@ -109,7 +109,7 @@ import Data.Text.Prettyprint.Doc (Pretty)
 import Data.Typeable (Typeable)
 import Data.Vector (Vector)
 import Data.Word (Word8, Word16, Word32, Word64)
-import Dhall.Binary (StandardVersion(..))
+import Dhall.Binary.StandardVersion (StandardVersion(..))
 import Dhall.Core (Expr(..), Chunks(..))
 import Dhall.Import (Imported(..))
 import Dhall.Parser (Src(..))
@@ -135,6 +135,7 @@ import qualified Data.Text.IO
 import qualified Data.Text.Lazy
 import qualified Data.Vector
 import qualified Dhall.Binary
+import qualified Dhall.Binary.StandardVersion
 import qualified Dhall.Context
 import qualified Dhall.Core
 import qualified Dhall.Import
@@ -185,7 +186,7 @@ instance (Pretty s, Pretty a, Typeable s, Typeable a) => Show (InvalidType s a) 
         where
           txt0 = Dhall.Util.insert invalidTypeExpected
           txt1 = Dhall.Util.insert invalidTypeExpression
-            
+
 
 instance (Pretty s, Pretty a, Typeable s, Typeable a) => Exception (InvalidType s a)
 
@@ -243,7 +244,7 @@ defaultEvaluateSettings :: EvaluateSettings
 defaultEvaluateSettings = EvaluateSettings
   { _startingContext = Dhall.Context.empty
   , _normalizer      = Dhall.Core.ReifiedNormalizer (const (pure Nothing))
-  , _standardVersion = Dhall.Binary.defaultStandardVersion
+  , _standardVersion = Dhall.Binary.StandardVersion.defaultStandardVersion
   }
 
 -- | Access the starting context used for evaluation and type-checking.

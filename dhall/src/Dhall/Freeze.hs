@@ -13,7 +13,7 @@ import Control.Exception (SomeException)
 import Data.Monoid ((<>))
 import Data.Maybe (fromMaybe)
 import Data.Text
-import Dhall.Binary (StandardVersion(..))
+import Dhall.Binary.StandardVersion (StandardVersion(..))
 import Dhall.Core (Expr(..), Import(..), ImportHashed(..), ImportType(..))
 import Dhall.Import (standardVersion)
 import Dhall.Parser (exprAndHeaderFromText, Src)
