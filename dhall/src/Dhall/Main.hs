@@ -64,6 +64,7 @@ import qualified Dhall.Parser
 import qualified Dhall.Pretty
 import qualified Dhall.Repl
 import qualified Dhall.TypeCheck
+import qualified Dhall.Version
 import qualified GHC.IO.Encoding
 import qualified Options.Applicative
 import qualified Paths_dhall as Meta
@@ -332,7 +333,7 @@ command (Options {..}) = do
                     <>  Data.Text.pack (showVersion Meta.version)
 
             let line₁ = "Standard version: "
-                    <>  Dhall.Binary.renderStandardVersion Dhall.Binary.defaultStandardVersion
+                    <>  Data.Text.pack (showVersion Dhall.Version.latestSupportedStandardVersion)
 
             Data.Text.IO.putStrLn line₀
             Data.Text.IO.putStrLn line₁

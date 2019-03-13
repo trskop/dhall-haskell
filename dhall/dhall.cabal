@@ -436,7 +436,8 @@ Library
         Dhall.Repl,
         Dhall.TH,
         Dhall.Tutorial,
-        Dhall.TypeCheck
+        Dhall.TypeCheck,
+        Dhall.Version
     Other-Modules:
         Dhall.Pretty.Internal,
         Dhall.Parser.Expression,
